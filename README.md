@@ -15,7 +15,7 @@ Sebetulnya dulu sudah pernah ada aplikasinya, tetapi source codenya tidak ada la
 |   ✅   | Administrator | Manajemen Pustakawan      |    👍📬    |
 |   ✅   | Pustakawan    | Manajemen Anggota         |    👍📬    |
 |   ❌   | Pustakawan    | Manajemen Buku            |    👍║▌    |
-|   ❌   | Pustakawan    | Manajemen Peminjaman Buku |   👍💰📬   |
+|   ❌   | Pustakawan    | Manajemen Peminjaman Buku |  👍║▌💰📬  |
 |   ❌   | Pustakawan    | Cetak Kartu Angota        |   ✨💰📬   |
 |   ❌   | Anggota       | Histori Peminjaman Buku   |     👍     |
 |   ✅   | _Semua_       | Ubah Profil               |     👍     |
@@ -63,16 +63,16 @@ Keterangan:
 
 ### Peminjaman Buku
 
-- Pustakawan scan kartu anggota atau input nomor anggota dahulu.
-- Selanjutnya tinggal scan barcode ISBN pada buku.
-- Secara *default*, batas waktu peminjaman adalah tiga (3) hari. Lebih dari itu akan dikenakan biaya Rp 500.
-- Nominal denda diatur di file .env dengan *key* **DENDA_RUPIAH**.
+-   Pustakawan scan kartu anggota atau input nomor anggota dahulu.
+-   Selanjutnya tinggal scan barcode ISBN pada buku.
+-   Secara _default_, batas waktu peminjaman adalah tiga (3) hari. Lebih dari itu akan dikenakan biaya Rp 500.
+-   Nominal denda diatur di file .env dengan _key_ **DENDA_RUPIAH**.
 
 ## Kontribusi
 
-Terima kasih atas niatan kontribusinya kepada Sistem Informasi Manajemen Perpustakaan Sedehana ini. 
+Terima kasih atas niatan kontribusinya kepada Sistem Informasi Manajemen Perpustakaan Sedehana ini.
 
-Silahkan ajukan *Pull Request* jika ada penambahan, pengurangan, atau perbaikan fitur serta ajukan *Issue* jika menemukan kekeliruan dalam sistem yang ada, khususnya dari demo yang disediakan.
+Silahkan ajukan _Pull Request_ jika ada penambahan, pengurangan, atau perbaikan fitur serta ajukan _Issue_ jika menemukan kekeliruan dalam sistem yang ada, khususnya dari demo yang disediakan.
 
 ## License
 
