@@ -23,13 +23,13 @@ Sebetulnya dulu sudah pernah ada aplikasinya, tetapi source codenya tidak ada la
 
 Keterangan:
 
-✅ = Sudah ada dan mungkin butuh modifikasi lebih baik
-❌ = Belum ada
-⏲️ = Dalam pengerjaan
-📬 = Butuh SMTP
-║▌ = Butuh barcode scanner (atau logikanya)
-💰 = Butuh perhitungan uang
-👍 = Wajib ada
+✅ = Sudah ada dan mungkin butuh modifikasi lebih baik  
+❌ = Belum ada  
+⏲️ = Dalam pengerjaan  
+📬 = Butuh SMTP  
+║▌ = Butuh barcode scanner (atau logikanya)  
+💰 = Butuh perhitungan uang  
+👍 = Wajib ada  
 ✨ = _Nice to have_
 
 > **Administrator juga dapat akses terhadap seluruh aksi yang dapat dilakukan oleh Pustakawan.**
