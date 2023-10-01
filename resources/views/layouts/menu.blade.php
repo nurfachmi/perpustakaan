@@ -20,6 +20,6 @@
 @endcan
 @can('members.index')
     <li class="nav-item">
-        <a class="nav-link" href="{{ route('members.index') }}">Buku</a>
+        <a class="nav-link" href="{{ route('books.index') }}">Buku</a>
     </li>
 @endcan
