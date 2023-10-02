@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 
 class BookController extends Controller
 {
-    private $title = "Books";
+    private $title = "Book";
     /**
      * Display a listing of the resource.
      */
