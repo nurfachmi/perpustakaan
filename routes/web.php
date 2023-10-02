@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\BorrowBookController;
+use App\Http\Controllers\BorrowController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\MemberController;
 use App\Http\Controllers\ModuleController;
@@ -50,6 +52,9 @@ Route::middleware(['verified', 'auth',])->group(function () {
     Route::resource('modules', ModuleController::class)->only('index', 'store');
 
     Route::resource('members', MemberController::class);
+
+    Route::resource('borrows', BorrowController::class);
+    Route::resource('borrows.borrow_books', BorrowBookController::class);
 
     Route::prefix('datatables')->as('datatables.')->group(
         base_path('routes/datatables.php'),
