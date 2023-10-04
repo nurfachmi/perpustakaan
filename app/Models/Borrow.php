@@ -20,6 +20,13 @@ class Borrow extends Model
         'return_at' => 'date',
     ];
 
+    protected $attributes = [
+        'late_price' => 500,
+        'book_price' => 50000,
+        // 'late_price' => config('perpustakaan.late_price'),
+        // 'book_price' => config('perpustakaan.book_price'),
+    ];
+
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
@@ -63,6 +70,16 @@ class Borrow extends Model
             get: function () {
                 if (empty($this->return_at)) return 0;
                 return ($this->books_borrowed - $this->books_returned) * $this->book_price;
+            }
+        );
+    }
+
+    protected function totalFee(): Attribute
+    {
+        return Attribute::make(
+            get: function () {
+                if (empty($this->return_at)) return 0;
+                return $this->late_fee + $this->lost_fee;
             }
         );
     }

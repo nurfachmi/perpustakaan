@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\BorrowStoreRequest;
 use App\Models\Borrow;
+use App\Models\Card;
 use Illuminate\Http\Request;
 
 class BorrowController extends Controller
@@ -21,15 +23,28 @@ class BorrowController extends Controller
      */
     public function create()
     {
-        //
+        $data['title'] = 'New Borrowing Books';
+        return view('pages.borrow.create', $data);
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(BorrowStoreRequest $request)
     {
-        //
+        try {
+            // cek sedang meminjam atau tidak
+            $card = Card::firstWhere('number', $request->number);
+            $cek = Borrow::whereBelongsTo($card->user)->whereNull('return_at')->first();
+            if ($cek) throw new \Exception('Ada peminjaman yang sedang berjalan');
+            // END of cek sedang meminjam atau tidak
+
+            $borrow = new Borrow();
+            $borrow->user_id = $card->user->getKey();
+            $borrow->save();
+        } catch (\Throwable $th) {
+            return redirect()->back()->with('error', $th->getMessage());
+        }
     }
 
     /**

@@ -18,14 +18,22 @@ class BorrowDatatables extends Controller
         return DataTables::of($data)
             ->addColumn('name', function ($row) {
                 $url = route('borrows.borrow_books.index', $row->getKey());
-                return "<a href='$url'>" . $row->user->name . "</a>";
+                return "<a href='$url'>" . $row->user->name . " / " . $row->user->card->number . "</a>";
             })
             ->addColumn('status', function ($row) {
                 if (empty($row->return_at)) return "Active";
                 return "Done";
             })
-            ->editColumn('late_days', function ($row) {
+            ->addColumn('late_days', function ($row) {
                 return $row->late_days;
+            })
+            ->filterColumn('name', function ($query, $keyword) {
+                $query->whereHas('user', function ($user) use ($keyword) {
+                    $user->where('name', 'like', "%$keyword%")
+                        ->orWhereHas('card', function ($card) use ($keyword) {
+                            $card->where('number', 'like', "%$keyword%");
+                        });
+                });
             })
             ->rawColumns(['name'])
             ->toJson();

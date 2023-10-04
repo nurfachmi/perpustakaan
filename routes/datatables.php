@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Datatables\BorrowBookDatatables;
 use App\Http\Controllers\Datatables\BorrowDatatables;
 use App\Http\Controllers\Datatables\MemberDatatables;
 use App\Http\Controllers\Datatables\ModuleDatatables;
@@ -12,3 +13,4 @@ Route::get('users', UserDatatables::class)->name('users');
 Route::get('modules', ModuleDatatables::class)->name('modules');
 Route::get('members', MemberDatatables::class)->name('members');
 Route::get('borrows', BorrowDatatables::class)->name('borrows');
+Route::get('borrow-books/{borrow}', BorrowBookDatatables::class)->name('borrow-books');

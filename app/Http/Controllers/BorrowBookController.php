@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Borrow;
 use App\Models\BorrowBook;
 use Illuminate\Http\Request;
 
@@ -10,9 +11,11 @@ class BorrowBookController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Borrow $borrow)
     {
-        //
+        $data['title'] = 'Borrow #' . str($borrow->getKey())->padLeft(5, 0);
+        $data['borrow'] = $borrow;
+        return view('pages.borrow.book.index', $data);
     }
 
     /**

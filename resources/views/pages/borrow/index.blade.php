@@ -10,14 +10,6 @@
                 @can('borrows.create')
                     <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
                         <a href="{{ route('borrows.create') }}" type="button" class="btn btn-primary">New {{ str($title)->singular }}</a>
-                        <div class="btn-group" role="group">
-                            <button id="btnGroup{{ str($title)->slug() }}" type="button"
-                                class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
-                                aria-expanded="false"></button>
-                            <div class="dropdown-menu" aria-labelledby="btnGroup{{ str($title)->slug() }}">
-                                <a class="dropdown-item" href="#">Export {{ $title }}</a>
-                            </div>
-                        </div>
                     </div>
                 @endcan
             </div>
