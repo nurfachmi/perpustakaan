@@ -14,7 +14,7 @@ class BookDatatables extends Controller
      */
     public function __invoke(Request $request)
     {
-        $query = Book::orderBy('title');
+        $query = Book::with("category")->orderBy('title');
         return DataTables::of($query)
         ->addColumn('action', function ($row) {
                 $data = [
@@ -22,12 +22,18 @@ class BookDatatables extends Controller
                     'delete_url'   => route('books.destroy', ['book' => $row->getKey()]),
                     'redirect_url' => route('books.index'),
                     'name'         => $row->title,
-                    'resource'     => 'books',
-                    'custom_links' => []
+                    'resource'     => 'members',
                 ];
 
                 return view('components.datatable-action', $data);
             })
+            ->editColumn('title', function ($row) {
+                return "<a href='" . route('books.show', $row->getKey()) . "' title='Detail' alt='Detail'>$row->title</a>";
+            })
+            ->addColumn('category_id', function ($row) {
+                return $row->category->category_name; // Access the author's name from the relationship
+            })
+            ->rawColumns(["title"])
             ->toJson();
     }
 }
