@@ -13,9 +13,13 @@ class BorrowBookDatatables extends Controller
     /**
      * Handle the incoming request.
      */
-    public function __invoke(Request $request, Borrow $borrow)
+    public function __invoke(Borrow $borrow)
     {
-        $data = BorrowBook::where('borrow_id', $borrow->getKey());
-        return DataTables::of($data)->toJson();
+        $data = BorrowBook::where('borrow_id', $borrow->getKey())->orderByDesc('updated_at');
+        return DataTables::of($data)
+        ->editColumn('return_at', function ($row) {
+            return $row->return_at ? 'Returned' : '-';
+        })
+        ->toJson();
     }
 }

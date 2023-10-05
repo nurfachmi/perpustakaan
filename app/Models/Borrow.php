@@ -44,9 +44,9 @@ class Borrow extends Model
                 $tanggal_kembali = $this->end_at;
                 $tanggal_dikembalikan = $this->return_at;
 
-                if ($tanggal_kembali->isFuture() and empty($this->return_at)) {
-                    return 0;
-                }
+                if (empty($tanggal_kembali) and empty($tanggal_dikembalikan)) return 0;
+
+                if ($tanggal_kembali->isFuture()) return 0;
 
                 if (empty($this->return_at)) $tanggal_dikembalikan = now();
 

@@ -4,14 +4,14 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class BorrowStoreRequest extends FormRequest
+class BorrowDestroyRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
      */
     public function authorize(): bool
     {
-        return $this->user()->can('borrows.store');
+        return $this->user()->can('borrows.destroy');
     }
 
     /**

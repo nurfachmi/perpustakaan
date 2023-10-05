@@ -21,6 +21,7 @@ class BorrowDatatables extends Controller
                 return "<a href='$url'>" . $row->user->name . " / " . $row->user->card->number . "</a>";
             })
             ->addColumn('status', function ($row) {
+                if (empty($row->start_at)) return "Processing";
                 if (empty($row->return_at)) return "Active";
                 return "Done";
             })

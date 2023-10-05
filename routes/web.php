@@ -54,7 +54,7 @@ Route::middleware(['verified', 'auth',])->group(function () {
     Route::resource('members', MemberController::class);
 
     Route::resource('borrows', BorrowController::class);
-    Route::resource('borrows.borrow_books', BorrowBookController::class);
+    Route::resource('borrows.borrow_books', BorrowBookController::class)->only(['index', 'store']);
 
     Route::prefix('datatables')->as('datatables.')->group(
         base_path('routes/datatables.php'),

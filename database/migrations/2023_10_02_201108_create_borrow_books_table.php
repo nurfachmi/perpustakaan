@@ -16,6 +16,7 @@ return new class extends Migration
             $table->id();
             $table->foreignIdFor(Borrow::class)->constrained();
             $table->string('isbn');
+            $table->date('return_at')->nullable();
             $table->timestamps();
         });
     }

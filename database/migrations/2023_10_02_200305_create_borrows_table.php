@@ -15,8 +15,8 @@ return new class extends Migration
         Schema::create('borrows', function (Blueprint $table) {
             $table->id();
             $table->foreignIdFor(User::class)->constrained();
-            $table->date('start_at');
-            $table->date('end_at');
+            $table->date('start_at')->nullable();
+            $table->date('end_at')->nullable();
             $table->date('return_at')->nullable();
             $table->unsignedInteger('books_borrowed')->default(0);
             $table->unsignedInteger('books_returned')->default(0);
