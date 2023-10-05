@@ -17,6 +17,8 @@ class DatabaseSeeder extends Seeder
             PustakawanSeeder::class,
             AnggotaSeeder::class,
             PermissionSeeder::class,
+            CategorySeeder::class,
+            BookSeeder::class,
         ]);
     }
 }
