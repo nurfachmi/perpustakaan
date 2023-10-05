@@ -15,6 +15,18 @@
                 <div class="card-body">
                     <form action="{{ route('books.store') }}" method="post">
                         @csrf
+
+                        <div class="form-group row">
+                            <label for="isbn" class="col-sm-2 col-form-label"></label>
+                            <div class="col-sm-10">
+
+                                <div id="reader" width="300px"></div>
+                                @error('isbn')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+                        </div>
+
                         <div class="form-group row">
                             <label for="isbn" class="col-sm-2 col-form-label">ISBN</label>
                             <div class="col-sm-10">
@@ -25,7 +37,15 @@
                                 @enderror
                             </div>
                         </div>
-                        <div class="form-group row">
+
+                        <p>
+                            <a class="btn btn-primary" id="data-buku" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+                                Masukan Data Buku
+                            </a>
+                            </p>
+                            <div class="collapse" id="collapseExample">
+                            <div class="card card-body">
+                                 <div class="form-group row">
                             <label for="title" class="col-sm-2 col-form-label">Title</label>
                             <div class="col-sm-10">
                                 <input type="text" class="form-control @error('name') is-invalid @enderror"
@@ -48,22 +68,71 @@
                         <div class="form-group row">
                             <label for="category" class="col-sm-2 col-form-label">Category</label>
                             <div class="col-sm-10">
-                                <input type="text" class="form-control @error('author') is-invalid @enderror"
-                                    name="author" id="author" value="{{ old('category') }}" placeholder="Category">
-                                @error('category')
-                                    <div class="invalid-feedback">{{ $message }}</div>
-                                @enderror
+                                <select class="form-control @error('author') is-invalid @enderror"
+                                    name="category" id="category" value="{{ old('category') }}" placeholder="Category">
+                                    @foreach($category as $value):
+                                        <option value="{{$value->id}}">{{$value->category_name}}</option>
+                                    @endforeach;
+                                </select>
                             </div>
-                        </div>
-                        <div class="form-group row">
+
+                            <div class="form-group row mt-2">
                             <div class="offset-sm-2 col-sm-10">
                                 <button type="submit" class="btn btn-primary">Save</button>
                             </div>
                         </div>
+                        </div>
+                            </div>
+                            </div>
+
+
 
                     </form>
                 </div>
             </div>
         </div>
     </div>
+
+@endsection
+
+@section('script')
+ <script src="https://unpkg.com/html5-qrcode"></script>
+ <script>
+
+        if ($("#isbn").val() != ''){
+
+            $("#data-buku").removeClass("disabled")
+        } else {
+
+            $("#data-buku").addClass("disabled")
+        }
+
+        $("#isbn").on("input",function (e) {
+         if (e.target.value != ''){
+
+            $("#data-buku").removeClass("disabled")
+        } else {
+
+            $("#data-buku").addClass("disabled")
+        }
+        })
+
+        function onScanSuccess(decodedText, decodedResult) {
+        $("#isbn").val(decodedText)
+        $("#data-buku").toggleClass("disabled")
+        }
+
+
+        function onScanFailure(error) {
+        console.warn(`Code scan error = ${error}`);
+        }
+
+        let html5QrcodeScanner = new Html5QrcodeScanner(
+        "reader",
+        { fps: 10, qrbox: {width: 250, height: 250} },
+        /* verbose= */ false);
+        html5QrcodeScanner.render(onScanSuccess, onScanFailure);
+
+
+    </script>
 @endsection
