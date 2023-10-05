@@ -52,7 +52,7 @@
                                 $text = 'Return';
                             }
                         @endphp
-                        <div class="card mt-4">
+                        {{-- <div class="card mt-4">
                             <div class="card-header bg-success text-white font-weight-bold">
                                 Confirm to {{ $text }}
                             </div>
@@ -67,7 +67,7 @@
                                     <button type="submit" class="btn btn-success">{{ $text }}</button>
                                 </form>
                             </div>
-                        </div>
+                        </div> --}}
                     @endif
 
                     @if (!$borrow->start_at)
@@ -91,26 +91,26 @@
                 </div>
                 <div class="col-lg-8">
                     @if (!$borrow->return_at)
-                        <div class="card">
+                        <div class="card mb-2">
                             <div class="card-header bg-primary text-white font-weight-bold">
-                                Scan Books
+                                Scan Books or Member Card
                             </div>
                             <div class="card-body">
                                 <form action="{{ route('borrows.borrow_books.store', $borrow->getKey()) }}" method="post"
                                     class="form-inline">
                                     @csrf
-                                    <label class="sr-only" for="isbn">ISBN</label>
-                                    <input type="text" class="form-control mr-sm-2" id="isbn" name="isbn"
-                                        placeholder="ISBN" autofocus autocomplete="off">
+                                    <label class="sr-only" for="number">ISBN</label>
+                                    <input type="text" class="form-control mr-sm-2" id="number" name="number"
+                                        placeholder="ISBN or Card Number" autofocus autocomplete="off">
 
                                     <button type="submit" class="btn btn-primary">Scan</button>
                                 </form>
                             </div>
                         </div>
                     @endif
-                    <div class="card mt-2">
+                    <div class="card">
                         <div class="card-body">
-                            <x-datatable :tableId="'borrow-books'" :tableHeaders="['ISBN', 'Book Title', 'Status']" :tableColumns="[['data' => 'isbn'], ['data' => 'isbn'], ['data' => 'return_at']]" :getDataUrl="route('datatables.borrow-books', $borrow->getKey())" />
+                            <x-datatable :tableId="'borrow-books'" :tableHeaders="['ISBN', 'Book Title', 'Status']" :tableColumns="[['data' => 'isbn'], ['data' => 'title'], ['data' => 'return_at']]" :getDataUrl="route('datatables.borrow-books', $borrow->getKey())" />
                         </div>
                     </div>
                 </div>

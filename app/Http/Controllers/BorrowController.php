@@ -47,8 +47,6 @@ class BorrowController extends Controller
 
             $borrow = new Borrow();
             $borrow->user_id = $card->user->getKey();
-            // $borrow->start_at = now();
-            // $borrow->end_at = now()->addDays(config('perpustakaan.borrow_days'));
             $borrow->save();
             DB::commit();
 

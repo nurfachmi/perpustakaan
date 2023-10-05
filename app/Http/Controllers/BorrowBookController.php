@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\BorrowBookStoreRequest;
+use App\Models\Book;
 use App\Models\Borrow;
 use App\Models\BorrowBook;
+use App\Models\Card;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
@@ -23,49 +26,68 @@ class BorrowBookController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request, Borrow $borrow)
+    public function store(BorrowBookStoreRequest $request, Borrow $borrow)
     {
         try {
             DB::beginTransaction();
 
             // cek keberadaan buku
-            // $book = Book::firstWhere([
-            //     'isbn' => $request->isbn
-            // ]);
+            $book = Book::firstWhere([
+                'isbn' => $request->number
+            ]);
             // if (!$book) throw new \Exception('Book not found');
             // END of cek keberadaan buku
+            if ($book) {
+                if (empty($borrow->start_at)) {
+                    // proses peminjaman
+                    $borrow->borrow_books()->create([
+                        'isbn' => $request->number
+                    ]);
+                    $borrow->increment('books_borrowed');
 
-            // cek selesai atau belum
-            if ($borrow->return_at) throw new \Exception('Borrowing is over. No action further.');
+                    $text = 'Book scanned successfully';
+                } else {
+                    // proses pengembalian
+                    $book = BorrowBook::query()
+                        ->whereNull('return_at')
+                        ->where([
+                            'borrow_id' => $borrow->getKey(),
+                            'isbn' => $request->number
+                        ])
+                        ->first();
+                    if (!$book) throw new \Exception('Book not found');
 
-            if (empty($borrow->start_at)) {
-                // proses peminjaman
-                $borrow->borrow_books()->create([
-                    'isbn' => $request->isbn
-                ]);
-                $borrow->increment('books_borrowed');
+                    $book->return_at = now();
+                    $book->save();
+                    $book->borrow()->increment('books_returned');
 
-                $text = 'Book scanned successfully';
-            } else {
-                // proses pengembalian
-                $book = BorrowBook::query()
-                    ->whereNull('return_at')
-                    ->where([
-                        'borrow_id' => $borrow->getKey(),
-                        'isbn' => $request->isbn
-                    ])
-                    ->first();
-                if (!$book) throw new \Exception('Book not found');
+                    $text = 'Book returned successfully';
+                }
+                DB::commit();
 
-                $book->return_at = now();
-                $book->save();
-                $book->borrow()->increment('books_returned');
-
-                $text = 'Book returned successfully';
+                return redirect()->back()->withToastSuccess($text);
             }
-            DB::commit();
 
-            return redirect()->back()->withToastSuccess($text);
+            // cek kesesuaian kartu
+            $card = Card::firstWhere('number', $request->number);
+            if ($borrow->user()->isNot($card->user)) throw new \Exception('Member card number doesn\'t fit');
+            // konfirmasi peminjaman buku
+            if ($card and !$borrow->start_at) {
+                $borrow->start_at = now();
+                $borrow->end_at = now()->addDays(config('perpustakaan.borrow_days'));
+                $borrow->save();
+                DB::commit();
+
+                return to_route('borrows.index', $borrow->getKey())->withToastSuccess('Borrowing Books started');
+            }
+            // konfirmasi pengembalian buku
+            if ($card and $borrow->start_at) {
+                $borrow->return_at = now();
+                $borrow->save();
+                DB::commit();
+
+                return to_route('borrows.borrow_books.index', $borrow->getKey())->withToastSuccess('Borrowing ends successfully');
+            }
         } catch (\Throwable $th) {
             DB::rollBack();
             Log::error(
@@ -75,6 +97,7 @@ class BorrowBookController extends Controller
                     'data' => $request->all()
                 ]
             );
+
             return to_route('borrows.borrow_books.index', $borrow->getKey())->withToastError($th->getMessage());
         }
     }

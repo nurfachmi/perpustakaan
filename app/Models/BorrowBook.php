@@ -16,4 +16,9 @@ class BorrowBook extends Model
     {
         return $this->belongsTo(Borrow::class);
     }
+
+    public function book(): BelongsTo
+    {
+        return $this->belongsTo(Book::class, 'isbn', 'isbn');
+    }
 }
