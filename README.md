@@ -14,8 +14,8 @@ Sebetulnya dulu sudah pernah ada aplikasinya, tetapi source codenya tidak ada la
 |   ❌   | _Semua_       | Login dengan Gmail        |     ✨     |
 |   ✅   | Administrator | Manajemen Pustakawan      |    👍📬    |
 |   ✅   | Pustakawan    | Manajemen Anggota         |    👍📬    |
-|   ❌   | Pustakawan    | Manajemen Buku            |    👍║▌    |
-|   ❌   | Pustakawan    | Manajemen Peminjaman Buku |  👍║▌💰📬  |
+|   🔧   | Pustakawan    | Manajemen Buku            |    👍║▌    |
+|   ✅   | Pustakawan    | Manajemen Peminjaman Buku |  👍║▌💰📬  |
 |   ❌   | Pustakawan    | Cetak Kartu Angota        |   ✨💰📬   |
 |   ❌   | Anggota       | Histori Peminjaman Buku   |     👍     |
 |   ✅   | _Semua_       | Ubah Profil               |     👍     |
@@ -24,6 +24,7 @@ Sebetulnya dulu sudah pernah ada aplikasinya, tetapi source codenya tidak ada la
 Keterangan:
 
 ✅ = Sudah ada dan mungkin butuh modifikasi lebih baik  
+🔧 = Sudah ada dan butuh perbaikan segera
 ❌ = Belum ada  
 ⏲️ = Dalam pengerjaan  
 📬 = Butuh SMTP  
