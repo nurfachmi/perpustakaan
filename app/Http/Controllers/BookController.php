@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Category;
+use App\Models\Book;
 
 class BookController extends Controller
 {
@@ -22,6 +24,7 @@ class BookController extends Controller
     public function create()
     {
         $data['title'] = str($this->title)->plural();
+        $data['category'] = Category::all();
         return view("pages.book.create",$data);
     }
 
@@ -30,38 +33,57 @@ class BookController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $book = new Book();
+        $book->title = $request->title;
+        $book->isbn = $request->isbn;
+        $book->author = $request->author;
+        $book->category_id = $request->category;
+        $book->save();
+
+        return to_route('books.index')->withToastSuccess($this->title . ' created successfully!');
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Book $book)
     {
-        //
+        return self::edit($book);
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Book $book)
     {
-        //
+        $data['title'] = 'Edit ' . $this->title;
+        $data['book'] = $book;
+        $data['category'] = Category::all();
+        return view('pages.book.edit', $data);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, Book $book)
     {
-        //
+        $book->title = $request->title;
+        $book->isbn = $request->isbn;
+        $book->author = $request->author;
+        $book->category_id = $request->category;
+        $book->save();
+
+        return to_route('books.index')->withToastSuccess($this->title . ' updated successfully!');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Book $book)
     {
-        //
+        $book->delete();
+        return response()->json([
+                'msg' => $this->title . ' deleted successfully!'
+            ], 200);
     }
 }

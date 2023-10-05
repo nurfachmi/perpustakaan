@@ -90,6 +90,7 @@
         $("form").attr('autocomplete', 'off')
         $("input").attr('autocomplete', false)
     </script>
+    @yield('script')
     @stack('js')
 </body>
 
