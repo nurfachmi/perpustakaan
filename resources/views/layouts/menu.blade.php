@@ -18,6 +18,11 @@
         <a class="nav-link" href="{{ route('members.index') }}">Members</a>
     </li>
 @endcan
+@can('members.index')
+    <li class="nav-item">
+        <a class="nav-link" href="{{ route('books.index') }}">Buku</a>
+    </li>
+@endcan
 @can('borrows.index')
     <li class="nav-item">
         <a class="nav-link" href="{{ route('borrows.index') }}">Borrowing Books</a>

@@ -4,6 +4,7 @@ use App\Http\Controllers\BorrowBookController;
 use App\Http\Controllers\BorrowController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\MemberController;
+use App\Http\Controllers\BookController;
 use App\Http\Controllers\ModuleController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\RolePermissionController;
@@ -59,5 +60,7 @@ Route::middleware(['verified', 'auth',])->group(function () {
     Route::prefix('datatables')->as('datatables.')->group(
         base_path('routes/datatables.php'),
     );
+
+    Route::resource('books', BookController::class);
 });
 
