@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use Database\Seeders\Permissions\BorrowPermission;
 use Database\Seeders\Permissions\MemberPermissions;
 use Database\Seeders\Permissions\ModulePermissions;
 use Database\Seeders\Permissions\UserPermissions;
@@ -20,6 +21,7 @@ class PermissionSeeder extends Seeder
             UserPermissions::class,
             ModulePermissions::class,
             MemberPermissions::class,
+            BorrowPermission::class,
         ]);
     }
 }

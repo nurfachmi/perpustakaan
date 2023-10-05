@@ -23,3 +23,8 @@
         <a class="nav-link" href="{{ route('books.index') }}">Buku</a>
     </li>
 @endcan
+@can('borrows.index')
+    <li class="nav-item">
+        <a class="nav-link" href="{{ route('borrows.index') }}">Borrowing Books</a>
+    </li>
+@endcan
