@@ -1,6 +1,6 @@
 @php
-    $tombolUbah = isset($edit_url) ? "<a class=\"dropdown-item\" href=\"$edit_url\">Edit</a>" : '';
-    $tombolHapus = isset($delete_url) ? "<a class=\"dropdown-item\" data-url=\"$delete_url\" data-redirect=\"$redirect_url\" data-name=\"$name\" onclick=\"softDelete(this)\">Delete</a>" : '';
+    $tombolUbah = isset($edit_url) ? "<a class=\"dropdown-item\" href=\"$edit_url\">Ubah</a>" : '';
+    $tombolHapus = isset($delete_url) ? "<a class=\"dropdown-item\" data-url=\"$delete_url\" data-redirect=\"$redirect_url\" data-name=\"$name\" onclick=\"softDelete(this)\">Hapus</a>" : '';
 @endphp
 
 @if ($tombolUbah || $tombolHapus || isset($custom_links))
@@ -8,7 +8,7 @@
     <div class="dropdown">
         <button class="btn btn-primary btn-sm dropdown-toggle shadow-sm" type="button" id="dropdownMenuButton"
             data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            Actions
+            Aksi
         </button>
         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
             @if (isset($resource))
