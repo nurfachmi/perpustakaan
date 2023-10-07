@@ -73,31 +73,36 @@ Keterangan:
 1. Install [Composer](https://getcomposer.org/doc/00-intro.md#installation-linux-unix-macos) secara global (tanpa docker)
 2. Install [Docker](https://docs.docker.com/get-docker/)
 3. Install `make`, biasanya sudah terpasang secara default oleh OS yang dipakai. Tetapi untuk [Windows, bisa menggunakan Chocolatey](https://stackoverflow.com/a/32127632)
-4. Salin repositori
+4. Salin repositori dan masuk ke repositori yang telah disalin
     ```sh
     git clone https://github.com/nurfachmi/perpustakaan.git
+    cd perpustakaan
     ```
 5. Salin file `.env.example` dan beri nama `.env`
     ```sh
     cp .env.example .env
     ```
-6. Install *dependencies* dengan
+6. Jalankan command `make` untuk install *dependencies*, dan migrasi db dengan *dummy* data
     ```sh
-    make install
+    make
     ```
-7. Lalu jalankan aplikasi dengan
-    ```sh
-    make run
-    ```
-8. Setelah aplikasi berjalan, siapkan database dengan migrate
-    ```sh
-    make migrate
-    ```
-9. Dan untuk mengisi data *dummy* selama pengembangan, bisa menggunakan seeder
-    ```sh
-    make seed
-    ```
-10. Aplikasi sudah bisa diakses pada `http://localhost`. Dan masuk dengan email `admin@nurfachmi.com` dan password `password`
+    Setelah berhasil, aplikasi sudah bisa diakses pada `http://localhost`. Dan bisa masuk dengan email `admin@nurfachmi.com` dan password `password`
+
+Selain itu, terdapat beberapa `make` *command* yang tersedia
+- `make install`
+    Untuk menginstall *dependencies* yang dibutuhkan menjalankan Laravel sail
+- `make run`
+    Untuk menjalankan aplikasi
+- `make migrate`
+    Mempersiapkan database dan table untuk menjalankan aplikasi (hanya perlu sekali run atau ketika ada perubahan dimodel)
+- `make seed`
+    Mengisi database dengan *dummy* data untuk keperluan testing (hanya perlu sekali run atau ketika ada perubahan dimodel dan seeder)
+- `make restart`
+    Menjalankan ulang aplikasi
+- `make stop`
+    Menghentikan aplikasi
+- `make rebuild`
+    Jika ingin merebuild image docker (Bisa digunakan ketika ada perubahan yang tidak langsung terlihat)
 
 ## Kontribusi
 
