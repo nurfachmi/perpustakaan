@@ -14,7 +14,8 @@ Sebetulnya dulu sudah pernah ada aplikasinya, tetapi source codenya tidak ada la
 |   ❌   | _Semua_       | Login dengan Gmail        |     ✨     |
 |   ✅   | Administrator | Manajemen Pustakawan      |    👍📬    |
 |   ✅   | Pustakawan    | Manajemen Anggota         |    👍📬    |
-|   🔧   | Pustakawan    | Manajemen Buku            |    👍║▌    |
+|   ✅   | Pustakawan    | Manajemen Buku            |     👍     |
+|   ❌   | Pustakawan    | Manajemen Kategori Buku   |     👍     |
 |   ✅   | Pustakawan    | Manajemen Peminjaman Buku |  👍║▌💰📬  |
 |   ❌   | Pustakawan    | Cetak Kartu Angota        |   ✨💰📬   |
 |   ❌   | Anggota       | Histori Peminjaman Buku   |     👍     |
@@ -22,7 +23,7 @@ Sebetulnya dulu sudah pernah ada aplikasinya, tetapi source codenya tidak ada la
 |   ✅   | _Semua_       | Ubah Password             |     👍     |
 
 Keterangan:
-
+Sint ea quam exercit
 ✅ = Sudah ada dan mungkin butuh modifikasi lebih baik  
 🔧 = Sudah ada dan butuh perbaikan segera
 ❌ = Belum ada  
@@ -34,6 +35,23 @@ Keterangan:
 ✨ = _Nice to have_
 
 > **Administrator juga dapat akses terhadap seluruh aksi yang dapat dilakukan oleh Pustakawan.**
+
+## Kebutuhan Sistem
+
+- PHP 8.1+
+- [Composer](https://getcomposer.org)
+
+## Proses Instalasi
+
+- *Fork* repositori ini terlebih dahulu. Lebih senang lagi kalau klik tanda *Star* juga. 
+- Kemudian *clone* ke dalam komputer Anda. `git clone url-repositori`
+- Masuk ke dalam folder projek. `cd perpustakaan` 
+- *Install dependencies*. `composer install`
+- Salin file env. `cp .env.example .env`
+- Sesuaikan nilai pada env, misalnya kredensial database
+- Masukkan data. `php artisan migrate --seed`
+- Jalankan projek. `php artisan serve`
+- Buka di browser `http://localhost:8000`
 
 ## Alur Bisnis
 
@@ -54,13 +72,6 @@ Keterangan:
 -   Anggota menerima email verifikasi berisi link untuk set password.
 -   Anggota belum bisa login sebelum melakukan verifikasi di atas.
 -   Anggota belum bisa meminjam buku sebelum melengkapi seluruh data diri.
-
-### Manajemen Buku
-
--   Proses **_create_** buku adalah sebagai berikut:
-
-    -   Admin menginput ISBN terlebih dahulu, bisa dengan barcode scanner atau tulis manual, kemudian klik tombol "Simpan".
-    -   Selanjutnya untuk mengisi data-data buku lainnya.
 
 ### Peminjaman Buku
 
