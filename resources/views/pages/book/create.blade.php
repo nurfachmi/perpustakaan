@@ -18,7 +18,7 @@
 
                         <div class="form-group row">
                             <label for="title" class="col-sm-2 col-form-label">
-                                Judul Buku
+                                {{ __('buku.form.title') }}
                                 <span class="text-danger">*</span>
                             </label>
                             <div class="col-sm-10">
@@ -32,7 +32,7 @@
 
                         <div class="form-group row">
                             <label for="category_id" class="col-sm-2 col-form-label">
-                                Kategori
+                                {{ __('buku.form.category_id') }}
                                 <span class="text-danger">*</span>
                             </label>
                             <div class="col-sm-10">
@@ -51,7 +51,7 @@
 
                         <div class="form-group row">
                             <label for="author" class="col-sm-2 col-form-label">
-                                Penulis
+                                {{ __('buku.form.author') }}
                                 <span class="text-danger">*</span>
                             </label>
                             <div class="col-sm-10">
@@ -65,7 +65,7 @@
 
                         <div class="form-group row">
                             <label for="publish_year" class="col-sm-2 col-form-label">
-                                Tahun Terbit
+                                {{ __('buku.form.publish_year') }}
                                 <span class="text-danger">*</span>
                             </label>
                             <div class="col-sm-10">
@@ -78,7 +78,9 @@
                         </div>
 
                         <div class="form-group row">
-                            <label for="description" class="col-sm-2 col-form-label">Sinopsis</label>
+                            <label for="description" class="col-sm-2 col-form-label">
+                                {{ __('buku.form.description') }}
+                            </label>
                             <div class="col-sm-10">
                                 <textarea class="form-control @error('description') is-invalid @enderror" name="description" id="description"
                                     rows="3">{{ old('description') }}</textarea>
@@ -89,13 +91,16 @@
                         </div>
 
                         <div class="form-group row">
-                            <label for="isbn" class="col-sm-2 col-form-label">ISBN</label>
+                            <label for="isbn" class="col-sm-2 col-form-label">
+                                {{ __('buku.form.isbn.title') }}
+                            </label>
                             <div class="col-sm-10">
                                 <input type="text" class="form-control @error('isbn') is-invalid @enderror"
                                     name="isbn" id="isbn" value="{{ old('isbn') }}" placeholder="ISBN"
                                     aria-describedby="isbnId">
-                                <small id="isbnId" class="form-text text-muted">Jika dikosongkan, akan diisi otomatis
-                                    oleh sistem.</small>
+                                <small id="isbnId" class="form-text text-muted">
+                                    {{ __('buku.form.isbn.description') }}
+                                </small>
                                 @error('isbn')
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror

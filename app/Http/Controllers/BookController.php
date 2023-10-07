@@ -13,14 +13,12 @@ class BookController extends Controller
 {
     use Randomizer;
 
-    private $title = "Buku";
-    
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $data['title'] = 'Data ' . $this->title;
+        $data['title'] = __('buku.title.index');
         return view("pages.book.index", $data);
     }
 
@@ -29,7 +27,7 @@ class BookController extends Controller
      */
     public function create()
     {
-        $data['title'] = $this->title . ' Baru';
+        $data['title'] = __('buku.title.create');
         $data['category'] = Category::all();
         return view("pages.book.create", $data);
     }
@@ -43,7 +41,7 @@ class BookController extends Controller
 
         if (is_null($request->isbn)) $this->createISBN($book);
 
-        return to_route('books.index')->withToastSuccess($this->title . ' berhasil disimpan');
+        return to_route('books.index')->withToastSuccess(__('buku.flash.store'));
     }
 
     /**
@@ -59,7 +57,7 @@ class BookController extends Controller
      */
     public function edit(Book $book)
     {
-        $data['title'] = 'Ubah ' . $this->title;
+        $data['title'] = __('buku.title.edit');
         $data['book'] = $book;
         $data['category'] = Category::all();
         return view('pages.book.edit', $data);
@@ -72,7 +70,7 @@ class BookController extends Controller
     {
         $book->update($request->validated());
 
-        return to_route('books.index')->withToastSuccess($this->title . ' berhasil diubah');
+        return to_route('books.index')->withToastSuccess(__('buku.flash.update'));
     }
 
     /**
@@ -82,7 +80,7 @@ class BookController extends Controller
     {
         $book->delete();
         return response()->json([
-            'msg' => $this->title . ' berhasil dihapus'
+            'msg' => __('buku.flash.destroy')
         ], 200);
     }
 }

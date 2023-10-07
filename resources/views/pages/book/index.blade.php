@@ -9,7 +9,9 @@
                 <h1 class="h3 mb-0 text-primary font-weight-bold">{{ $title }}</h1>
                 @can('members.create')
                     <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
-                        <a href="{{ route('books.create') }}" type="button" class="btn btn-primary">Buku Baru</a>
+                        <a href="{{ route('books.create') }}" type="button" class="btn btn-primary">
+                            {{ __('buku.title.create') }}
+                        </a>
                         <div class="btn-group" role="group">
                             <button id="btnGroup{{ str($title)->slug() }}" type="button"
                                 class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
@@ -23,7 +25,7 @@
             </div>
             <div class="card">
                 <div class="card-body">
-                    <x-datatable :tableId="'books'" :tableHeaders="['Judul Buku', 'ISBN', 'Penulis', 'Kategori', 'Aksi']" :tableColumns="[['data' => 'title'], ['data' => 'isbn'], ['data' => 'author'], ['data' => 'category_id'],['data' => 'action']]" :getDataUrl="route('datatables.books')" />
+                    <x-datatable :tableId="'books'" :tableHeaders="[__('buku.form.title'), __('buku.form.isbn.title'), __('buku.form.author'), __('buku.form.category_id'), 'Aksi']" :tableColumns="[['data' => 'title'], ['data' => 'isbn'], ['data' => 'author'], ['data' => 'category_id'],['data' => 'action']]" :getDataUrl="route('datatables.books')" />
                 </div>
             </div>
         </div>
