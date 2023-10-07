@@ -8,7 +8,7 @@
     <div class="dropdown">
         <button class="btn btn-primary btn-sm dropdown-toggle shadow-sm" type="button" id="dropdownMenuButton"
             data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            Aksi
+            {{__('general.action')}}
         </button>
         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
             @if (isset($resource))

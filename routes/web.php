@@ -11,6 +11,7 @@ use App\Http\Controllers\RolePermissionController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\UserPasswordController;
 use App\Http\Controllers\UserVerificationController;
+use App\Http\Controllers\LocalizationController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -64,3 +65,5 @@ Route::middleware(['verified', 'auth',])->group(function () {
     Route::resource('books', BookController::class);
 });
 
+// Route untuk Localization
+Route::get('lang/{locale}', LocalizationController::class)->name('lang');
