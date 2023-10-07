@@ -64,3 +64,8 @@ Route::middleware(['verified', 'auth',])->group(function () {
     Route::resource('books', BookController::class);
 });
 
+// Route untuk Localization
+if (file_exists(app_path('Http/Controllers/LocalizationController.php')))
+{
+    Route::get('lang/{locale}', [App\Http\Controllers\LocalizationController::class , 'lang']);
+}
