@@ -93,10 +93,9 @@ Keterangan:
 8. Setelah berhasil, bisa coba akses `http://localhost`
 9. Migrate seeder untuk bisa masuk dengan kredensial bawaan
     ```sh
-    docker exec -it perpustakaan-laravel.test-1 /bin/bash -c "php artisan db:seed"
+    ./vendor/bin/sail artisan db:seed
     ```
 10. Masuk dengan email `admin@nurfachmi.com` dan password `password`
-
 
 ## Kontribusi
 
