@@ -72,30 +72,32 @@ Keterangan:
 ## Cara menjalankan aplikasi
 1. Install [Composer](https://getcomposer.org/doc/00-intro.md#installation-linux-unix-macos) secara global (tanpa docker)
 2. Install [Docker](https://docs.docker.com/get-docker/)
-3. Salin repositori
+3. Install `make`, biasanya sudah terpasang secara default oleh OS yang dipakai. Tetapi untuk [Windows, bisa menggunakan Chocolatey](https://stackoverflow.com/a/32127632)
+4. Salin repositori
     ```sh
     git clone https://github.com/nurfachmi/perpustakaan.git
     ```
-4. Setelah repositori disalin, install *dependencies* dengan Composer
-    ```sh
-    cd perpustakaan
-    composer install
-    ```
-5. salin file `.env.example` dan beri nama `.env`
+5. Salin file `.env.example` dan beri nama `.env`
     ```sh
     cp .env.example .env
     ```
-6. Jalankan aplikasi dengan sail
+6. Install *dependencies* dengan
     ```sh
-    ./vendor/bin/sail up
+    make install
     ```
-7. Tunggu proses instalasi dengan docker sampai selesai
-8. Setelah berhasil, bisa coba akses `http://localhost`
-9. Migrate seeder untuk bisa masuk dengan kredensial bawaan
+7. Lalu jalankan aplikasi dengan
     ```sh
-    ./vendor/bin/sail artisan db:seed
+    make run
     ```
-10. Masuk dengan email `admin@nurfachmi.com` dan password `password`
+8. Setelah aplikasi berjalan, siapkan database dengan migrate
+    ```sh
+    make migrate
+    ```
+9. Dan untuk mengisi data *dummy* selama pengembangan, bisa menggunakan seeder
+    ```sh
+    make seed
+    ```
+10. Aplikasi sudah bisa diakses pada `http://localhost`. Dan masuk dengan email `admin@nurfachmi.com` dan password `password`
 
 ## Kontribusi
 
