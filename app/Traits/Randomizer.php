@@ -4,15 +4,12 @@ namespace App\Traits;
 
 trait Randomizer
 {
-    public function createISBN(int $type = 13): string
+    public function createISBN(\App\Models\Book $book): void
     {
-        $state = true;
-        while ($state) {
-            $isbn = ($type == 13) ? fake()->isbn13() : fake()->isbn10();
-            $book = \App\Models\Book::firstWhere('isbn', $isbn);
-            if (!$book) $state = false;
-        }
+        $isbn = 'P' . str(\App\Models\Book::max('id'))->padLeft(5, 0);
 
-        return $isbn;
+        $book->update([
+            'isbn' => $isbn
+        ]);
     }
 }
