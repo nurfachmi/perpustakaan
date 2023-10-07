@@ -35,8 +35,6 @@ class BorrowBookController extends Controller
             $book = Book::firstWhere([
                 'isbn' => $request->number
             ]);
-            // if (!$book) throw new \Exception('Book not found');
-            // END of cek keberadaan buku
             if ($book) {
                 if (empty($borrow->start_at)) {
                     // proses peminjaman
@@ -62,32 +60,39 @@ class BorrowBookController extends Controller
                     $book->borrow()->increment('books_returned');
 
                     $text = 'Book returned successfully';
+
                 }
                 DB::commit();
 
-                return redirect()->back()->withToastSuccess($text);
+                return to_route('borrows.borrow_books.index', $borrow->getKey())->withToastSuccess($text);
             }
+            // END of cek keberadaan buku
 
             // cek kesesuaian kartu
             $card = Card::firstWhere('number', $request->number);
             if ($borrow->user()->isNot($card->user)) throw new \Exception('Member card number doesn\'t fit');
+            // END of cek kesesuaian kartu
+
             // konfirmasi peminjaman buku
             if ($card and !$borrow->start_at) {
+                // handle jika buku masih kosong
+                if ($borrow->borrow_books->count() < 1) throw new \Exception('Anda belum menginput buku sama sekali');
+                // END of handle jika buku masih kosong
+
                 $borrow->start_at = now();
                 $borrow->end_at = now()->addDays(config('perpustakaan.borrow_days'));
                 $borrow->save();
-                DB::commit();
-
-                return to_route('borrows.index', $borrow->getKey())->withToastSuccess('Borrowing Books started');
-            }
-            // konfirmasi pengembalian buku
-            if ($card and $borrow->start_at) {
+                $text = 'Borrowing Books started';
+            } else if ($card and $borrow->start_at) {
                 $borrow->return_at = now();
                 $borrow->save();
-                DB::commit();
-
-                return to_route('borrows.borrow_books.index', $borrow->getKey())->withToastSuccess('Borrowing ends successfully');
+                $text = 'Borrowing ends successfully';
             }
+            DB::commit();
+
+            return to_route('borrows.borrow_books.index', $borrow->getKey())->withToastSuccess($text);
+            // END of konfirmasi pengembalian buku
+
         } catch (\Throwable $th) {
             DB::rollBack();
             Log::error(
