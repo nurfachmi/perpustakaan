@@ -2,20 +2,25 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\BookStoreRequest;
+use App\Http\Requests\BookUpdateRequest;
 use Illuminate\Http\Request;
 use App\Models\Category;
 use App\Models\Book;
+use App\Traits\Randomizer;
 
 class BookController extends Controller
 {
-    private $title = "Book";
+    use Randomizer;
+
+    private $title = "Buku";
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $data['title'] = str($this->title)->plural();
-        return view("pages.book.index",$data);
+        $data['title'] = 'Data ' . $this->title;
+        return view("pages.book.index", $data);
     }
 
     /**
@@ -23,24 +28,21 @@ class BookController extends Controller
      */
     public function create()
     {
-        $data['title'] = str($this->title)->plural();
+        $data['title'] = $this->title . ' Baru';
         $data['category'] = Category::all();
-        return view("pages.book.create",$data);
+        return view("pages.book.create", $data);
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(BookStoreRequest $request)
     {
-        $book = new Book();
-        $book->title = $request->title;
-        $book->isbn = $request->isbn;
-        $book->author = $request->author;
-        $book->category_id = $request->category;
-        $book->save();
+        if (is_null($request->isbn)) $request->merge(['isbn' => $this->createISBN(13)]);
 
-        return to_route('books.index')->withToastSuccess($this->title . ' created successfully!');
+        Book::create($request->all());
+
+        return to_route('books.index')->withToastSuccess($this->title . ' berhasil disimpan');
     }
 
     /**
@@ -56,7 +58,7 @@ class BookController extends Controller
      */
     public function edit(Book $book)
     {
-        $data['title'] = 'Edit ' . $this->title;
+        $data['title'] = 'Ubah ' . $this->title;
         $data['book'] = $book;
         $data['category'] = Category::all();
         return view('pages.book.edit', $data);
@@ -65,13 +67,9 @@ class BookController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Book $book)
+    public function update(BookUpdateRequest $request, Book $book)
     {
-        $book->title = $request->title;
-        $book->isbn = $request->isbn;
-        $book->author = $request->author;
-        $book->category_id = $request->category;
-        $book->save();
+        $book->update($request->validated());
 
         return to_route('books.index')->withToastSuccess($this->title . ' updated successfully!');
     }
@@ -83,7 +81,7 @@ class BookController extends Controller
     {
         $book->delete();
         return response()->json([
-                'msg' => $this->title . ' deleted successfully!'
-            ], 200);
+            'msg' => $this->title . ' berhasil dihapus'
+        ], 200);
     }
 }
