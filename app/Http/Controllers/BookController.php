@@ -14,6 +14,7 @@ class BookController extends Controller
     use Randomizer;
 
     private $title = "Buku";
+    
     /**
      * Display a listing of the resource.
      */
@@ -38,9 +39,9 @@ class BookController extends Controller
      */
     public function store(BookStoreRequest $request)
     {
-        if (is_null($request->isbn)) $request->merge(['isbn' => $this->createISBN(13)]);
+        $book = Book::create($request->validated());
 
-        Book::create($request->all());
+        if (is_null($request->isbn)) $this->createISBN($book);
 
         return to_route('books.index')->withToastSuccess($this->title . ' berhasil disimpan');
     }
@@ -71,7 +72,7 @@ class BookController extends Controller
     {
         $book->update($request->validated());
 
-        return to_route('books.index')->withToastSuccess($this->title . ' updated successfully!');
+        return to_route('books.index')->withToastSuccess($this->title . ' berhasil diubah');
     }
 
     /**
