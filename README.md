@@ -69,6 +69,35 @@ Keterangan:
 -   Secara _default_, batas waktu peminjaman adalah tiga (3) hari. Lebih dari itu akan dikenakan biaya Rp 500.
 -   Nominal denda diatur di file .env dengan _key_ **DENDA_RUPIAH**.
 
+## Cara menjalankan aplikasi
+1. Install [Composer](https://getcomposer.org/doc/00-intro.md#installation-linux-unix-macos) secara global (tanpa docker)
+2. Install [Docker](https://docs.docker.com/get-docker/)
+3. Salin repositori
+    ```sh
+    git clone https://github.com/nurfachmi/perpustakaan.git
+    ```
+4. Setelah repositori disalin, install *dependencies* dengan Composer
+    ```sh
+    cd perpustakaan
+    composer install
+    ```
+5. salin file `.env.example` dan beri nama `.env`
+    ```sh
+    cp .env.example .env
+    ```
+6. Jalankan aplikasi dengan sail
+    ```sh
+    ./vendor/bin/sail up
+    ```
+7. Tunggu proses instalasi dengan docker sampai selesai
+8. Setelah berhasil, bisa coba akses `http://localhost`
+9. Migrate seeder untuk bisa masuk dengan kredensial bawaan
+    ```sh
+    docker exec -it perpustakaan-laravel.test-1 /bin/bash -c "php artisan db:seed"
+    ```
+10. Masuk dengan email `admin@nurfachmi.com` dan password `password`
+
+
 ## Kontribusi
 
 Terima kasih atas niatan kontribusinya kepada Sistem Informasi Manajemen Perpustakaan Sedehana ini.
