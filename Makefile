@@ -9,7 +9,6 @@ migrate:
 	while ! ./vendor/bin/sail exec mysql bash -c " mysqladmin ping -u sail -p$(echo $pass)"; do \
         sleep 2; \
     done; \
-    # when mysql is ready and ready to listen, run migrate
     ./vendor/bin/sail artisan migrate
 seed: migrate
     pass=$(. ./.env ; echo $DB_PASSWORD); \
