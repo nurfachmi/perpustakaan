@@ -11,9 +11,7 @@ test('can\'t access home page (unauthenticated)', function () {
     $response->assertRedirectToRoute('login');
 });
 
-test('can access home page (authenticated)', function () {
-    $user = User::factory()->create();
-
+test('can access home page (authenticated)', function (User $user) {
     actingAs($user);
 
     $response = get(route('home'));
@@ -21,4 +19,4 @@ test('can access home page (authenticated)', function () {
     $response->assertStatus(200);
     $response->assertViewIs('pages.home');
     $response->assertSeeText('Home');
-});
+})->with('user_admin');
