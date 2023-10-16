@@ -96,7 +96,7 @@
                                 Scan Books or Member Card
                             </div>
                             <div class="card-body">
-                                <form action="{{ route('borrows.borrow_books.store', $borrow->getKey()) }}" method="post"
+                                <form id="form_scanner" action="{{ route('borrows.borrow_books.store', $borrow->getKey()) }}" method="post"
                                     class="form-inline">
                                     @csrf
                                     <label class="sr-only" for="number">ISBN</label>
@@ -117,4 +117,19 @@
             </div>
         </div>
     </div>
+    <script src="{{ asset('js/barcodescanner.js') }}"></script>
+    <script>
+        const barcodeScanner = new BarcodeScanner();
+        barcodeScanner.initialize();
+
+        document.addEventListener("onbarcodescanned", function(e) {
+            if (e.detail !== "") {
+                const numInput = document.querySelector("#form_scanner #number");
+                const scannerForm = document.querySelector("#form_scanner");
+                numInput.focus();
+                numInput.value = e.detail;
+                scannerForm.submit();
+            }
+        })
+    </script>
 @endsection
