@@ -29,9 +29,6 @@
                 <div class="collapse navbar-collapse" id="navbarColor01">
                     <ul class="navbar-nav mr-auto">
                         @auth
-                            <li class="nav-item active">
-                                <a class="nav-link" href="{{ route('home') }}">{{__('general.home')}}</a>
-                            </li>
                             @include('layouts.menu')
                             @stack('left-nav')
                         @else
