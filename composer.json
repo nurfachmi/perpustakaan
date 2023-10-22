@@ -15,6 +15,7 @@
         "laravel/tinker": "^2.8",
         "nwidart/laravel-modules": "^10.0",
         "opcodesio/log-viewer": "^2.5",
+        "picqer/php-barcode-generator": "^2.4",
         "realrashid/sweet-alert": "^7.0",
         "spatie/laravel-permission": "^5.10",
         "tightenco/ziggy": "^1.6",

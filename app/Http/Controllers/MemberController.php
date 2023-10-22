@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
+use Picqer\Barcode\BarcodeGeneratorPNG;
 
 class MemberController extends Controller
 {
@@ -149,13 +150,16 @@ class MemberController extends Controller
     public function sendMemberCard(User $member)
     {
         try {
+            $generatorPNG = new BarcodeGeneratorPNG();
+            $barcodeImage = "data:image/png;base64," . base64_encode($generatorPNG->getBarcode($member->card->number, $generatorPNG::TYPE_CODE_128));
             // render ID Card HTML view from a blade template
             $pdfHtml = view('pdf.member.card', [
                 'memberName' => $member->name,
                 'cardMemberNo' => $member->card->number,
                 'cardMemberName' => $member->name,
                 'cardMemberEmail' => $member->email,
-                'cardMemberExpired' => date('j F, Y', strtotime($member->card->end_date))
+                'cardMemberExpired' => date('j F, Y', strtotime($member->card->end_date)),
+                'barcodeImage' => $barcodeImage
             ])->render();
 
             // generate pdf file for member card based on card data

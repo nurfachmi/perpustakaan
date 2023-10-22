@@ -26,6 +26,7 @@
             <li><span style="font-weight: bold; text-transform: uppercase;">{{ $cardMemberName }}</span></li>
             <li><span style="font-weight: medium; text-transform: lowercase;">{{  $cardMemberEmail }}</span></li>
         </ul>
-        <span style="position: absolute; bottom: 0; right: 0; font-size: small;">Berlaku sampai: {{ $cardMemberExpired }}</span>
+        <img style="position: absolute; bottom: 20pt; width: 36mm; height: auto;" src="{{ $barcodeImage }}" />
+        <span style="position: absolute; bottom: 0; font-size: small;">Berlaku sampai: {{ $cardMemberExpired }}</span>
     </body>
 </html>
