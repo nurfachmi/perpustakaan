@@ -1,4 +1,5 @@
 @php
+    $tombolKirimKartuAnggota = isset($send_card_url) ? "<a class=\"dropdown-item\" href=\"$send_card_url\">Kirim Kartu Anggota</a>" : '';
     $tombolUbah = isset($edit_url) ? "<a class=\"dropdown-item\" href=\"$edit_url\">Ubah</a>" : '';
     $tombolHapus = isset($delete_url) ? "<a class=\"dropdown-item\" data-url=\"$delete_url\" data-redirect=\"$redirect_url\" data-name=\"$name\" onclick=\"softDelete(this)\">Hapus</a>" : '';
 @endphp
@@ -11,6 +12,7 @@
             {{__('general.action')}}
         </button>
         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            {!! $tombolKirimKartuAnggota !!}
             @if (isset($resource))
                 @can("$resource.edit")
                     {!! $tombolUbah !!}

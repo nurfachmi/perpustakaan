@@ -21,6 +21,7 @@ class MemberDatatables extends Controller
                     'edit_url'     => route('members.edit', ['member' => $row->getKey()]),
                     'delete_url'   => route('members.destroy', ['member' => $row->getKey()]),
                     'redirect_url' => route('members.index'),
+                    'send_card_url' => route('members.send.card', ['member' => $row->getKey()]),
                     'name'         => $row->name,
                     'resource'     => 'members',
                     'custom_links' => []
