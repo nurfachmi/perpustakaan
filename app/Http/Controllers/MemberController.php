@@ -4,9 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Models\Card;
 use App\Models\User;
+use App\Mail\MemberCard;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Mail;
+use Picqer\Barcode\BarcodeGeneratorPNG;
 
 class MemberController extends Controller
 {
@@ -139,5 +142,43 @@ class MemberController extends Controller
                 'msg' => $th->getMessage()
             ]);
         }
+    }
+
+    /**
+     * Send member card to the member's email address
+     */
+    public function sendMemberCard(User $member)
+    {
+        try {
+            $generatorPNG = new BarcodeGeneratorPNG();
+            $barcodeImage = "data:image/png;base64," . base64_encode($generatorPNG->getBarcode($member->card->number, $generatorPNG::TYPE_CODE_128));
+            // render ID Card HTML view from a blade template
+            $pdfHtml = view('pdf.member.card', [
+                'memberName' => $member->name,
+                'cardMemberNo' => $member->card->number,
+                'cardMemberName' => $member->name,
+                'cardMemberEmail' => $member->email,
+                'cardMemberExpired' => date('j F, Y', strtotime($member->card->end_date)),
+                'barcodeImage' => $barcodeImage
+            ])->render();
+
+            // generate pdf file for member card based on card data
+            $pdf = app('dompdf.wrapper');
+            $pdf->loadHTML($pdfHtml);
+
+            // then send the email with the attachment to the member's email
+            Mail::to($member)->send(new MemberCard($member, $pdf->output()));
+        } catch (\Throwable $th) {
+            Log::error(
+                $th->getMessage(),
+                [
+                    'action' => 'Send Member card',
+                    'data' => $member
+                ]
+            );
+            return to_route('members.index')->withToastError($th->getMessage());
+        }
+
+        return to_route('members.index')->withToastSuccess('Member card has been successfully sent!');
     }
 }

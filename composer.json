@@ -6,6 +6,7 @@
     "license": "MIT",
     "require": {
         "php": "^8.1",
+        "barryvdh/laravel-dompdf": "^2.0",
         "doctrine/dbal": "^3.7",
         "guzzlehttp/guzzle": "^7.2",
         "laravel/fortify": "^1.17",
@@ -14,6 +15,7 @@
         "laravel/tinker": "^2.8",
         "nwidart/laravel-modules": "^10.0",
         "opcodesio/log-viewer": "^2.5",
+        "picqer/php-barcode-generator": "^2.4",
         "realrashid/sweet-alert": "^7.0",
         "spatie/laravel-permission": "^5.10",
         "tightenco/ziggy": "^1.6",
